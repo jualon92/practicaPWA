@@ -1,0 +1,43 @@
+<ul class="demo-list-icon mdl-list">
+
+     {{#each producto}}
+    <li class="mdl-list__item">
+
+        <!--icono -->
+        <span class="mdl-list__item-primary-content wd-10">
+            <i class="material-icons mdl-list__item-icon"> shopping_cart</i>
+        </span>
+
+        <!--nombre del producto-->
+        <span class="mdl-list__item-primary-content wd-30">
+            {{nombre}}
+        </span>
+
+        <!-- cantidad -->
+        <span class="mdl-list__item-primary-content wd-20">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input onchange="cambiarCantidad(value, {{@index}})" value="{{cantidad}}" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample-cantidad">
+                <label class="mdl-textfield__label" for="sample-cantidad">Cantidad</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+        </span>
+
+        <!-- precio-->
+        <span class="mdl-list__item-primary-content wd-20 ml-20">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input value="{{precio}}" onchange="cambiarPrecio(value, {{@index}})"class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample-precio">
+                <label class="mdl-textfield__label" for="sample-precio">Precio</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+        </span>
+
+        <!-- boton borrar producto-->
+        <span>
+            <button onclick="borrarItem(this, {{@index}})"
+                class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored wd-20 ml-20">
+                <i class="material-icons">remove_shopping_cart</i>
+            </button>
+        </span>
+    </li>
+    {{/each}}
+</ul>

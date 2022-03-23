@@ -1,0 +1,23 @@
+.contenedor-menu{
+    display:flex;
+    align-items: center;
+    gap:30px;
+    padding: 16px;
+    
+
+}
+
+.wd-10{width:10%;} 
+.wd-20{width:20%;}
+.wd-30{width:30%;}
+.wd-40{width:40%;}
+.wd-50{width:50%;}
+.wd-60{width:60%;}
+
+.ml-10{margin-left: 10px;}
+.ml-20{margin-left: 20px;}
+
+
+.mdl-layout{ /* minimo tamaño de contenedor*/
+    min-width: 400px;
+}

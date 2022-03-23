@@ -1,16 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi sitio web</title>
+    <title>SuperLista</title>
+
+    <!-- https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
+
 <body>
-    <h1>Bienvenidos a PWA</h1>
-     <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta, aspernatur eaque consectetur hic omnis temporibus possimus voluptatibus in eveniet saepe voluptates, placeat expedita tempore pariatur blanditiis magni! Tempora, distinctio libero.
-     Nisi officiis autem laudantium architecto porro a dignissimos rerum ullam officia, fugiat sunt enim nesciunt! Ut sint, architecto laudantium rem molestias deleniti, sequi similique cumque modi expedita vel provident magnam!
-     Voluptas est dolores corrupti ullam culpa deserunt veritatis necessitatibus iure! Ipsa animi sint totam ad sit facere aperiam quo reiciendis nihil. Corporis illo nemo officiis quibusdam, harum aspernatur fugiat quisquam?
-     Ullam odit, quam natus repellendus suscipit voluptate delectus officiis fuga quasi similique sunt molestias quibusdam. Cupiditate, labore, unde inventore distinctio, veniam laboriosam vero deleniti cum repellat ullam sed enim a! </p>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">Super Lista Productos</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <!--   <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link" href="">Link</a>
+                </nav>  -->
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Title</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Servicio 1</a>
+                <a class="mdl-navigation__link" href="">Servicio 2</a>
+                <a class="mdl-navigation__link" href="">Servicio 3</a>
+                <a class="mdl-navigation__link" href="">Servicio 4</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!-- Your content goes here -->
+                <!-- Simple Textfield -->
+                <div class="contenedor-menu ">
+                    <!-- input nuevo ingreso-->
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="text" id="sample1">
+                        <label class="mdl-textfield__label" for="sample1">Nombre producto...</label>
+                    </div>
+
+                     <!--boton agregar -->
+                     <button id="btn-add-producto" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary">
+                        <i class="material-icons">add_shopping_cart</i>
+                    </button>
+
+                    <!-- boton borrar todo -->
+                    <button id="btn-remove-all" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Borrar Todos
+                      </button>
+
+                    
+                </div>
+                <!--listado de productos-->
+                <div id="lista"></div>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+        integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
+
 </html>
