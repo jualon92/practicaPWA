@@ -90,15 +90,33 @@ function agregarListeners(){
     })
 }
 
+//registrar Service Worker
+function registrarServiceWorker(){
+    //verificar si nav es compatible con sv
+    if ("serviceWorker" in navigator){
+        this.navigator.serviceWorker.register("/sw.js")
+        .then( reg => {
+            console.log("El service worker se registro correctamente", reg)
+        })
+        .catch( err => {
+            console.log("error al registrar el Service Worker", err)
+        })
+    }else{
+        console.log("navegador no compatible con Service worker")
+    }
+   
+
+}
+
 
 function start() {
+    
     console.warn("Super Lista")
+    registrarServiceWorker()
     renderLista()
     agregarListeners()
 }
 
-
-
-
+ 
 //Ejecucion
 start()
