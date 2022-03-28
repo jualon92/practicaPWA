@@ -94,7 +94,7 @@ function agregarListeners(){
 function registrarServiceWorker(){
     //verificar si nav es compatible con sv
     if ("serviceWorker" in navigator){
-        navigator.serviceWorker.register("/PRACTICA-PWA/sw.js")
+        navigator.serviceWorker.register("sw.js")
         .then( reg => {
             console.log("El service worker se registro correctamente", reg)
         })
