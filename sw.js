@@ -9,3 +9,6 @@ self.addEventListener("activate", e => {
 self.addEventListener("fetch", e => {
     console.log("sw fetch")
 })
+
+
+ 

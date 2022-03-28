@@ -3,7 +3,7 @@
     "background_color": "#FF4081",
     "display": "standalone",
 
-    "scope": "/practicaPWA",
+    "scope": "/",
     "start_url": "/",
     "name": "Super Lista De Compras",
     "short_name": "Super Lista",
