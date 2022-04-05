@@ -1,37 +1,56 @@
+import apiLista from "./api.js"
+
 //Variables globales
-  
-let listaProductos = [
-    {
-        nombre: "Carne",
-        cantidad: "2",
-        precio: 112.34,
-    },
-    {
-        nombre: "Pan",
-        cantidad: "5",
-        precio: 32.34,
-    },
-    {
-        nombre: "Fideos",
-        cantidad: "3",
-        precio: 66.34,
-    },
-    {
-        nombre: "Leche",
-        cantidad: "3",
-        precio: 26.34,
-    },
+
+let listaProductos = [ //para no tener que hacer get
 ]
 
 /*window.localStorage.setItem("listaProd", JSON.stringify(listaProductos))  */
- 
+
 
 //Funciones globales
-function reiniciarItem(indice){
-     listaProductos[indice].cantidad = "" 
-     listaProductos[precio].precio = ""
+async function reiniciarItem(id) {
+    //encontrar item
+    let ele = listaProductos.find(ele => ele.id == id)
+
+    // setear
+    ele[cantidad] = ""
+    ele[precio] = ""
+    await apiLista.put(id, ele) // actualizar 
+    renderLista()
 }
 
+
+async function cambiarValor(atributo, cantidad, id) {  //lo recibe como string en atributo
+
+    //encontrar el elemento
+    let ele = listaProductos.find(ele => ele.id == id)
+
+
+    let numero = atributo == "precio" ? parseInt(cantidad) : Number(cantidad)
+
+    ele[atributo] = numero //cambiar su atributo
+    console.warn(`${ele["nombre"]} cambio en ${atributo} :  ${numero}`)
+    await apiLista.put(id, ele) //actualizar
+    
+    console.warn(await apiLista.get())
+    renderLista()
+
+
+}
+
+async function borrarItem(id) {
+    console.log("borrar" + id)
+    await apiLista.del(id)
+    console.warn(await apiLista.get())
+    renderLista() // re render
+}
+
+window.packageHBS = { /*podria agregarse add event listener 
+y pasar parametros a data set, pero con*/
+    cambiarValor, borrarItem, reiniciarItem
+}
+/*
 function cambiarPrecio(precioNuevo,indice){
     console.log("precio viejo ", listaProductos[indice].precio)
     
@@ -48,75 +67,82 @@ function cambiarCantidad(cantidadNueva ,indice){
     
     listaProductos[indice].cantidad = parseInt(cantidadNueva)  
 }
+*/
 
-function borrarItem(item, indice){
-    console.warn(item, indice)
-    listaNueva = listaProductos.splice(indice,1) //devolver lista sin ese item
-    console.warn(listaNueva) 
-    renderLista() // re render
-     
-}
+
+
 
 
 async function renderLista() {
+
     let plantilla = await fetch("plantillas/item.hbs").then(r => r.text()) //obtengo plantilla en forma text
     let template = Handlebars.compile(plantilla)  // compilo con plantilla string
-    let htmlFinal = template({ producto : listaProductos}) // alimento con lista, output html concatenado con c obj ref
-    document.getElementById("lista").innerHTML = htmlFinal  
-    componentHandler.upgradeElements(document.getElementById("lista"))
+
+    //no necesario tener que rehacer consultas
+    listaProductos = await apiLista.get() //lista tomada de nube
+
+    let htmlFinal = template({ producto: listaProductos }) // alimento con lista, output html concatenado con c obj ref
+    document.querySelector("#lista").innerHTML = htmlFinal
+    componentHandler.upgradeElements(document.querySelector("#lista"))
+
 }
 
 
-function agregarListeners(){
-    document.getElementById("btn-add-producto").addEventListener("click", e => {
-        console.warn("nuevo prod ingresado")
-        let valor =  document.getElementById("sample1").value 
-        if (valor !== ""){
-            let nuevoProducto = {nombre: valor, valor:"",cantidad:""}
-            listaProductos.push(nuevoProducto)
-            document.getElementById("sample1").value = ""
-            renderLista()
 
-        }else{
+function agregarListenersEleEstaticos() { //botones estaticos
+
+    //agregar ele
+    document.querySelector("#btn-add-producto").addEventListener("click", async () => {
+        console.warn("nuevo prod ingresado")
+        let valor = document.querySelector("#sample1").value
+        if (valor) {
+            let nuevoProducto = { nombre: valor, precio: 1, cantidad: 1 }
+            await apiLista.post(nuevoProducto)
+            renderLista()
+        } else {
             console.log("error")
         }
-       
+
     })
 
-    document.getElementById("btn-remove-all").addEventListener("click", e => {
+    document.getElementById("btn-remove-all").addEventListener("click", async e => {
         console.warn("borrado total")
-        listaProductos = []
+        // listaProductos = [] // for each delete 
+        await apiLista.deleteAll(listaProductos)
+
         renderLista()
     })
 }
 
 //registrar Service Worker
-function registrarServiceWorker(){
+function registrarServiceWorker() {
     //verificar si nav es compatible con sv
-    if ("serviceWorker" in navigator){
+    if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js")
-        .then( reg => {
-            console.log("El service worker se registro correctamente", reg)
-        })
-        .catch( err => {
-            console.log("error al registrar el Service Worker!", err)
-        })
-    }else{
+            .then(reg => {
+                console.log("El service worker se registro correctamente", reg)
+            })
+            .catch(err => {
+                console.log("error al registrar el Service Worker!", err)
+            })
+    } else {
         console.log("No hay service worker en navigator")
     }
-   
+
 
 }
+
 
 
 function start() {
-    
+
     console.warn("Super Lista")
     registrarServiceWorker()
     renderLista()
-    agregarListeners()
+    agregarListenersEleEstaticos()
+
 }
 
- 
+
 //Ejecucion
 start()

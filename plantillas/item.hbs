@@ -16,7 +16,7 @@
         <!-- cantidad -->
         <span class="mdl-list__item-primary-content wd-20">
             <div class="mdl-textfield mdl-js-textfield">
-                <input onchange="cambiarCantidad(value, {{@index}})" value="{{cantidad}}" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample-cantidad">
+                <input onchange="window.packageHBS.cambiarValor('cantidad',value, {{id}})" value="{{cantidad}}" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample-cantidad">
                 <label class="mdl-textfield__label" for="sample-cantidad">Cantidad</label>
                 <span class="mdl-textfield__error">Input is not a number!</span>
             </div>
@@ -25,7 +25,7 @@
         <!-- precio-->
         <span class="mdl-list__item-primary-content wd-20 ml-20">
             <div class="mdl-textfield mdl-js-textfield">
-                <input value="{{precio}}" onchange="cambiarPrecio(value, {{@index}})"class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample-precio">
+                <input value="{{precio}}" onchange="window.packageHBS.cambiarValor('precio',value, {{id}})"class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample-precio">
                 <label class="mdl-textfield__label" for="sample-precio">Precio</label>
                 <span class="mdl-textfield__error">Input is not a number!</span>
             </div>
@@ -33,7 +33,7 @@
 
         <!-- boton borrar producto-->
         <span>
-            <button onclick="borrarItem(this, {{@index}})"
+            <button onclick="window.packageHBS.borrarItem({{id}})"
                 class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored wd-20 ml-20">
                 <i class="material-icons">remove_shopping_cart</i>
             </button>
@@ -41,3 +41,4 @@
     </li>
     {{/each}}
 </ul>
+

@@ -21,3 +21,16 @@
 .mdl-layout{ /* minimo tamaño de contenedor*/
     min-width: 359px;
 }
+
+.contenedor-progress{
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 50px;
+   
+}
+progress{
+    width: 70%;
+   display:none;
+
+}

@@ -11,14 +11,14 @@
     <!-- SERVICE WORKERS-->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon\icon-192x192.png">
-    <meta name="theme-color" content="#3F51B5"/>
+    <meta name="theme-color" content="#3F51B5" />
 
 
     <!-- https://fonts.google.com/icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
+    
 
     <link rel="stylesheet" href="css/estilos.css">
 </head>
@@ -53,6 +53,11 @@
         <main class="mdl-layout__content">
             <div class="page-content">
                 <!-- Your content goes here -->
+
+                <!--barra progreso-->
+                <div class="contenedor-progress">  
+                <progress min="0" max="100" value="0"></progress>
+            </div>
                 <!-- Simple Textfield -->
                 <div class="contenedor-menu ">
                     <!-- input nuevo ingreso-->
@@ -61,27 +66,35 @@
                         <label class="mdl-textfield__label" for="sample1">Nombre producto...</label>
                     </div>
 
-                     <!--boton agregar -->
-                     <button id="btn-add-producto" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary">
+                    <!--boton agregar -->
+                    <button id="btn-add-producto"
+                        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary">
                         <i class="material-icons">add_shopping_cart</i>
                     </button>
 
                     <!-- boton borrar todo -->
-                    <button id="btn-remove-all" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                    <button id="btn-remove-all" 
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
                         Borrar Todos
-                      </button>
+                    </button>
 
-                    
+
                 </div>
                 <!--listado de productos-->
                 <div id="lista"></div>
             </div>
         </main>
     </div>
-    <script src="js/main.js"></script>
+      <script src="js/api.js" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
         integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+       
+    <script src="js/main.js" type="module" ></script> 
+  
+
 </body>
 
 </html>
