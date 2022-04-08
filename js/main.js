@@ -2,11 +2,30 @@ import apiLista from "./api.js"
 
 //Variables globales
 
-let listaProductos = [ //para no tener que hacer get
+let listaProductos = [  
 ]
 
 /*window.localStorage.setItem("listaProd", JSON.stringify(listaProductos))  */
 
+
+function guardarListaProductos(lista) {
+    localStorage.setItem('lista', JSON.stringify(lista))
+}
+
+function leerListaProductos() {
+    let lista = []
+
+    let prods = localStorage.getItem('lista')
+    if(prods) {
+        try {
+            lista = JSON.parse(prods)
+        }
+        catch {
+            guardarListaProductos(lista)
+        }
+    }
+    return lista
+}
 
 //Funciones globales
 async function reiniciarItem(id) {
@@ -46,30 +65,10 @@ async function borrarItem(id) {
     renderLista() // re render
 }
 
-window.packageHBS = { /*podria agregarse add event listener 
-y pasar parametros a data set, pero con*/
+window.packageHBS = {  
     cambiarValor, borrarItem, reiniciarItem
 }
-/*
-function cambiarPrecio(precioNuevo,indice){
-    console.log("precio viejo ", listaProductos[indice].precio)
-    
-    console.warn("precio nuevo", precioNuevo)
-    
-    listaProductos[indice].precio = parseFloat(precioNuevo)
-
-}
-
-function cambiarCantidad(cantidadNueva ,indice){
-    console.log("cantidad vieja ", listaProductos[indice].cantidad)
-    
-    console.warn("cantidad nueva", cantidadNueva)
-    
-    listaProductos[indice].cantidad = parseInt(cantidadNueva)  
-}
-*/
-
-
+ 
 
 
 
@@ -81,6 +80,9 @@ async function renderLista() {
     //no necesario tener que rehacer consultas
     listaProductos = await apiLista.get() //lista tomada de nube
 
+     //Guardamos la lista de productos actualmente representada al render
+     guardarListaProductos(listaProductos)
+     
     let htmlFinal = template({ producto: listaProductos }) // alimento con lista, output html concatenado con c obj ref
     document.querySelector("#lista").innerHTML = htmlFinal
     componentHandler.upgradeElements(document.querySelector("#lista"))
@@ -114,24 +116,68 @@ function agregarListenersEleEstaticos() { //botones estaticos
     })
 }
 
-//registrar Service Worker
 function registrarServiceWorker() {
-    //verificar si nav es compatible con sv
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("sw.js")
+    if ('serviceWorker' in navigator) {
+        //estÃ³ de debe ejecutar cunado toda el documento web estÃ© cargado
+        navigator.serviceWorker.register('/sw.js')
             .then(reg => {
-                console.log("El service worker se registro correctamente", reg)
+                console.log('El service worker se registrÃ³ correctamente',reg)
+
+                reg.onupdatefound = () => {
+                    const installingWorker = reg.installing
+                    installingWorker.onstatechange = () => {
+                        console.log('SW --> ', installingWorker.state)
+                        if(installingWorker.state == 'activated') {
+                            console.error('Reinicio en 2 segundos ...')
+                            setTimeout(() => {
+                                console.log('Ok')
+                                location.reload()
+                            },2000)
+                        }
+                    }
+                }
+
             })
             .catch(err => {
-                console.log("error al registrar el Service Worker!", err)
+                console.error('Error al registrar el service worker', err)
             })
-    } else {
-        console.log("No hay service worker en navigator")
     }
-
-
+    else {
+        console.error('serviceWorker no estÃ¡ disponible en navigator')
+    }
 }
 
+function testCache(){
+    if (window.caches){
+        console.log("el cliente soporta cache")
+        console.log(caches)
+
+        /*creo espacio en caches*/
+        caches.open("prueba1") /*si existe lo abre, si no existe lo crea y lo abre*/
+        caches.open("prueba2")
+        /**/
+        caches.has("prueba1").then(console.log) /*toma funcion, console.log 
+
+        /*borrar cache*/
+        //caches.delete("prueba1").then(console.log)
+      //  caches.has("prueba1").then(r => console.log(r))
+
+        /* listo todos los caches*/
+        caches.keys().then(console.log)
+
+        /*abro cache y trabajo*/
+        caches.open("cache-v1.1").then(c => {
+           // c.add("/index.html")
+            c.addAll([
+                "/index.html",
+                "/css/estilos.css",
+                 
+            ]).then( () => {console.log("recursos agregados")}) //por si no existe recurso
+        })
+
+
+    }
+}
 
 
 function start() {
@@ -140,9 +186,12 @@ function start() {
     registrarServiceWorker()
     renderLista()
     agregarListenersEleEstaticos()
-
+    //testCache()
 }
 
 
 //Ejecucion
 start()
+
+
+export default {leerListaProductos, guardarListaProductos}

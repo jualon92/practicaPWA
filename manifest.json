@@ -1,10 +1,11 @@
 {
     "theme_color": "#3F51B5",
     "background_color": "#FF4081",
+     
     "display": "standalone",
-
-    "scope": "PRACTICA-PWA",
-    "start_url": "PRACTICA-PWA",
+    "orientation": "any",
+    "scope": "/",
+    "start_url": "/",
     "name": "Super Lista De Compras",
     "short_name": "Super Lista",
     "icons": [

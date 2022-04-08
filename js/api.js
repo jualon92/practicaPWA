@@ -1,3 +1,4 @@
+import productos from "../js/main.js"
 
 const getURL = (...id) => {
     //  let idNuevo = (id ? id : "")  // si id existe
@@ -13,8 +14,12 @@ const get = async () => {
         let prod = await fetch("https://61c0e6c233f24c0017823675.mockapi.io/mercado").then(r => r.json())
         return prod
     }
-    catch (error) {
-        console.error("Error GET", error)
+    catch(error) { // si no hay conexion
+        console.error('Error GET', error)
+
+        let prods = productos.leerListaProductos()
+        console.log(prods)
+        return prods
     }
 
 }
